@@ -153,7 +153,12 @@ if (configFile) {
   }
 } else if (configFromCLI) {
   config = configFromCLI;
-} else {
+} else if(process.env.PARSE_DASHBOARD_CONFIG) {
+  config = {
+    data: JSON.parse(process.env.PARSE_DASHBOARD_CONFIG, 'utf8')
+  }
+}
+  else {
   //Failed to load default config file.
   console.log('You must provide either a config file or an app ID, Master Key, and server URL. See parse-dashboard --help for details.');
   process.exit(4);
